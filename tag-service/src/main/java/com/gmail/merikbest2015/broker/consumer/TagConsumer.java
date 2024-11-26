@@ -17,9 +17,5 @@ public class TagConsumer {
     public void parseHashtag(TweetTagEvent event) {
         tagHandlerService.parseHashtag(event.getTweetId(), event.getTweetText());
     }
-
-    @KafkaListener(topics = KafkaTopicConstants.DELETE_TWEETS_HASHTAG_TOPIC, groupId = "${spring.kafka.consumer.group-id}")
-    public void deleteTag(Long tweetId) {
-        tagHandlerService.deleteTag(tweetId);
-    }
+    
 }
