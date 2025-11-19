@@ -1,42 +1,44 @@
 import React, { memo, ReactElement } from "react";
 import { useSelector } from "react-redux";
 
-import MembersAndFollowersModal from "../FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
+import MembersAndFollowersModal from "../FullListTweets/MembersAndFollowersModal";
 import {
     selectListItemFollowersSize,
     selectListItemId,
     selectListItemMembersSize,
     selectListItemOwnerId
 } from "../../../store/ducks/list/selectors";
-import FullListUserCount from "./FullListUserCount/FullListUserCount";
-import { useListModal } from "../../../hook/useListModal";
+import FullListUserCount from "./FullListUserCount";
+import { MembersAndFollowersEnum, useListModal } from "../../../hook/useListModal";
 
 const MembersAndFollowers = memo((): ReactElement => {
     const listId = useSelector(selectListItemId);
     const listOwnerId = useSelector(selectListItemOwnerId);
     const membersSize = useSelector(selectListItemMembersSize);
     const followersSize = useSelector(selectListItemFollowersSize);
-    const { visibleMembersAndFollowersModal, modalWindowTitle, onOpenModalWindow, onCloseModalWindow } = useListModal();
+    const { visibleMembersAndFollowersModal, modalInfo, onOpenModalWindow, onCloseModalWindow } = useListModal();
 
     return (
         <div>
             <FullListUserCount
-                id={"listMembers"}
+                id="listMembers"
                 userCount={membersSize}
-                title={"members"}
+                titleKey={MembersAndFollowersEnum.MEMBERS}
+                titleDefaultValue="Members"
                 onOpenModalWindow={onOpenModalWindow}
             />
             <FullListUserCount
-                id={"listFollowers"}
+                id="listFollowers"
                 userCount={followersSize}
-                title={"followers"}
+                titleKey={MembersAndFollowersEnum.FOLLOWERS}
+                titleDefaultValue="Followers"
                 onOpenModalWindow={onOpenModalWindow}
             />
             <MembersAndFollowersModal
                 listId={listId!}
                 listOwnerId={listOwnerId!}
                 visible={visibleMembersAndFollowersModal}
-                title={modalWindowTitle}
+                modalInfo={modalInfo}
                 onClose={onCloseModalWindow}
             />
         </div>

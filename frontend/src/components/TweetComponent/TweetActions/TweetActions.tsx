@@ -1,38 +1,48 @@
 import React, { FC, memo, ReactElement } from "react";
 import TweetActionResult, { TweetActionResults } from "../../TweetActionResult/TweetActionResult";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import {
     selectUserProfileFullName,
     selectUserProfileId,
     selectUserProfilePinnedTweetId
 } from "../../../store/ducks/userProfile/selectors";
-import { selectUserDataId, selectUserPinnedTweetId } from "../../../store/ducks/user/selectors";
+import { selectUserDataId } from "../../../store/ducks/user/selectors";
+import { TweetType } from "../../../types/common";
 
 interface TweetActionsProps {
-    retweetsUserIds?: number[];
     tweetId?: number;
+    tweetType?: TweetType;
     activeTab?: number;
 }
 
-const TweetActions: FC<TweetActionsProps> = memo(({ retweetsUserIds, tweetId, activeTab }): ReactElement => {
+const TweetActions: FC<TweetActionsProps> = memo(({ tweetId, tweetType, activeTab }): ReactElement | null => {
     const userProfileId = useSelector(selectUserProfileId);
-    const userProfilePinnedTweetId = useSelector(selectUserProfilePinnedTweetId);
+    const pinnedTweetId = useSelector(selectUserProfilePinnedTweetId);
     const fullName = useSelector(selectUserProfileFullName);
     const myProfileId = useSelector(selectUserDataId);
-    const myProfilePinnedTweetId = useSelector(selectUserPinnedTweetId);
-    const isTweetRetweetedByUser = retweetsUserIds?.findIndex((id) => id === userProfileId) !== -1;
+    const { t } = useTranslation();
+
+    if (activeTab !== 0) {
+        return null;
+    }
 
     return (
         <>
-            {activeTab === 0 && isTweetRetweetedByUser && userProfileId ? (
+            {(tweetType === TweetType.RETWEET) && (
                 <TweetActionResult
                     action={TweetActionResults.RETWEET}
-                    text={((myProfileId === userProfileId) ? ("You") : (fullName)) + " Retweeted"}
+                    text={myProfileId === userProfileId
+                        ? t("YOU_RETWEETED", { defaultValue: "You Retweeted" })
+                        : t("USER_RETWEETED", { fullName, defaultValue: `${fullName} Retweeted` })}
                 />
-            ) : null}
-            {((myProfilePinnedTweetId === tweetId || userProfilePinnedTweetId === tweetId) && activeTab === 0) && (
-                <TweetActionResult action={TweetActionResults.PIN} text={"Pinned Tweet"} />
+            )}
+            {(pinnedTweetId === tweetId) && (
+                <TweetActionResult
+                    action={TweetActionResults.PIN}
+                    text={t("PINNED_TWEET", { defaultValue: "Pinned Tweet" })}
+                />
             )}
         </>
     );

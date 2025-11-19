@@ -24,7 +24,7 @@ import {
     setNewMention,
     setNewNotification,
     setPhone,
-    setPinTweetId,
+    setPinTweet,
     setPrivateProfile,
     setProfileStarted,
     setReadMessage,
@@ -49,11 +49,10 @@ import {
 } from "../actionCreators";
 import { UserActionsType } from "../contracts/actionTypes";
 import { SettingsRequest, UserRequest } from "../contracts/state";
-import { AuthUserResponse } from "../../../../types/user";
-import { EndRegistrationRequest } from "../../../../pages/Authentication/SetPasswordModal/SetPasswordModal";
+import { AuthUserResponse, UserPintTweetResponse } from "../../../../types/user";
 import { ChatMessageResponse } from "../../../../types/chat";
 import { LoadingStatus } from "../../../../types/common";
-import { LoginRequest } from "../../../../types/auth";
+import { EndRegistrationRequest, LoginRequest } from "../../../../types/auth";
 
 describe("user actions", () => {
     testAction(updatedUserData, updatedUserData({ fullName: "text" } as UserRequest), {
@@ -70,9 +69,9 @@ describe("user actions", () => {
         payload: true
     });
 
-    testAction(setPinTweetId, setPinTweetId(1), {
+    testAction(setPinTweet, setPinTweet({ userId: 1, pinnedTweetId: 1 } as UserPintTweetResponse), {
         type: UserActionsType.SET_PIN_TWEET_ID,
-        payload: 1
+        payload: { userId: 1, pinnedTweetId: 1 } as UserPintTweetResponse
     });
 
     testAction(setReadMessage, setReadMessage(1), {

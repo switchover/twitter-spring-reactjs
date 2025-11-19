@@ -2,12 +2,13 @@ import React, { FC, ReactElement } from "react";
 import { Paper, Popover } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { Picker } from "emoji-mart";
+import { useTranslation } from "react-i18next";
 
 import { EmojiIcon, GifIcon, MediaIcon, SendMessageIcon } from "../../../../icons";
 import { MessageInput } from "../../MessageInput/MessageInput";
 import { useChatFooterStyles } from "./ChatFooterStyles";
 import { addChatMessage } from "../../../../store/ducks/chatMessages/actionCreators";
-import ActionIcon from "../../ActionIcon/ActionIcon";
+import ActionIcon from "../../ActionIcon";
 import { usePopup } from "../../../../hook/usePopup";
 import { useInputText } from "../../../../hook/useInputText";
 
@@ -18,12 +19,13 @@ interface ChatFooterProps {
 const ChatFooter: FC<ChatFooterProps> = ({ chatId }): ReactElement => {
     const classes = useChatFooterStyles();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const { text, setText, handleChangeText, addEmoji, textConverter } = useInputText();
     const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();
 
     const onSendMessage = (): void => {
         if (text !== "") {
-            dispatch(addChatMessage({ chatId: chatId, text: textConverter() }));
+            dispatch(addChatMessage({ chatId, text: textConverter() }));
             setText("");
         }
     };
@@ -31,14 +33,16 @@ const ChatFooter: FC<ChatFooterProps> = ({ chatId }): ReactElement => {
     return (
         <Paper className={classes.chatFooter}>
             <ActionIcon
-                actionText={"Media"}
-                className={"chatIcon"}
+                actionText="Media"
+                translationKey="MEDIA"
+                className="chatIcon"
                 icon={MediaIcon}
                 positionTop
             />
             <ActionIcon
-                actionText={"GIF"}
-                className={"chatIcon"}
+                actionText="GIF"
+                translationKey="GIF"
+                className="chatIcon"
                 icon={GifIcon}
                 positionTop
             />
@@ -47,12 +51,13 @@ const ChatFooter: FC<ChatFooterProps> = ({ chatId }): ReactElement => {
                 value={text}
                 onChange={handleChangeText}
                 variant="outlined"
-                placeholder="Start a new message"
+                placeholder={t("START_A_NEW_MESSAGE", { defaultValue: "Start a new message" })}
             />
-            <div id={"handleOpenPopup"} onClick={handleOpenPopup}>
+            <div id="handleOpenPopup" onClick={handleOpenPopup}>
                 <ActionIcon
-                    actionText={"Emoji"}
-                    className={"emojiIcon"}
+                    actionText="Emoji"
+                    translationKey="EMOJI"
+                    className="emojiIcon"
                     icon={EmojiIcon}
                     positionTop
                 />
@@ -60,8 +65,9 @@ const ChatFooter: FC<ChatFooterProps> = ({ chatId }): ReactElement => {
             <div style={{ marginLeft: 8 }}>
                 <ActionIcon
                     onClick={onSendMessage}
-                    actionText={"Send"}
-                    className={"chatIcon"}
+                    actionText="Send"
+                    translationKey="SEND"
+                    className="chatIcon"
                     icon={SendMessageIcon}
                     disabled={text.length === 0}
                     positionTop

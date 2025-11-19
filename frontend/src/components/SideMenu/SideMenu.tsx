@@ -2,6 +2,7 @@ import React, { FC, ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { IconButton } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import {
     BookmarksIcon,
@@ -23,7 +24,7 @@ import {
 import UserSideProfile from "../UserSideProfile/UserSideProfile";
 import { selectUserDataId } from "../../store/ducks/user/selectors";
 import { useSideMenuStyles } from "./SideMenuStyles";
-import { DisplayProps } from "../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
+import { DisplayProps } from "../../pages/Settings/AccessibilityDisplayLanguages/Display";
 import { BOOKMARKS, HOME, LISTS, MESSAGES, NOTIFICATIONS, PROFILE, SEARCH } from "../../constants/path-constants";
 import AddTweetButton from "./AddTweetButton/AddTweetButton";
 import SideMenuItem from "./SideMenuItem/SideMenuItem";
@@ -35,12 +36,13 @@ import SideMenuMoreItem from "./SideMenuMoreItem/SideMenuMoreItem";
 const SideMenu: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }): ReactElement => {
     const classes = useSideMenuStyles();
     const myProfileId = useSelector(selectUserDataId);
+    const { t } = useTranslation();
 
     return (
         <>
             <ul className={classes.container}>
                 <li>
-                    <NavLink to={HOME} activeClassName={"selected"}>
+                    <NavLink to={HOME} activeClassName="selected">
                         <div className={classes.logoIcon}>
                             <IconButton color="primary">
                                 {TweetIcon}
@@ -49,43 +51,43 @@ const SideMenu: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }
                     </NavLink>
                 </li>
                 <SideMenuHomeItem
-                    title={"Home"}
+                    title={t("HOME", { defaultValue: "Home" })}
                     path={HOME}
                     icon={HomeIcon}
                     filledIcon={HomeIconFilled}
                 />
                 <SideMenuItem
-                    title={"Explore"}
+                    title={t("EXPLORE", { defaultValue: "Explore" })}
                     path={SEARCH}
                     icon={ExploreIcon}
                     filledIcon={ExploreIconFilled}
                 />
                 <SideMenuNotificationItem
-                    title={"Notifications"}
+                    title={t("NOTIFICATIONS", { defaultValue: "Notifications" })}
                     path={NOTIFICATIONS}
                     icon={NotificationsIcon}
                     filledIcon={NotificationsIconFilled}
                 />
                 <SideMenuMessagesItem
-                    title={"Messages"}
+                    title={t("MESSAGES", { defaultValue: "Messages" })}
                     path={MESSAGES}
                     icon={MessagesIcon}
                     filledIcon={MessagesIconFilled}
                 />
                 <SideMenuItem
-                    title={"Bookmarks"}
+                    title={t("BOOKMARKS", { defaultValue: "Bookmarks" })}
                     path={BOOKMARKS}
                     icon={BookmarksIcon}
                     filledIcon={BookmarksIconFilled}
                 />
                 <SideMenuItem
-                    title={"Lists"}
+                    title={t("LISTS", { defaultValue: "Lists" })}
                     path={LISTS}
                     icon={ListsIcon}
                     filledIcon={ListsIconFilled}
                 />
                 <SideMenuItem
-                    title={"Profile"}
+                    title={t("PROFILE", { defaultValue: "Profile" })}
                     path={`${PROFILE}/${myProfileId}`}
                     icon={ProfileIcon}
                     filledIcon={ProfileIconFilled}

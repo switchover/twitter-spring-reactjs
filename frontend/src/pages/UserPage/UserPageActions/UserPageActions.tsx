@@ -1,6 +1,7 @@
 import React, { memo, ReactElement } from "react";
 import { ClickAwayListener, List } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useUserPageActionsStyles } from "./UserPageActionsStyles";
 import { EditIcon, MomentsIcon, ReportIcon, ShareIcon } from "../../../icons";
@@ -12,13 +13,13 @@ import {
     selectUserProfileIsUserBlocked,
     selectUserProfileUsername
 } from "../../../store/ducks/userProfile/selectors";
-import AddUserToListsButton from "./AddUserToListsButton/AddUserToListsButton";
-import CopyProfileLinkButton from "./CopyProfileLinkButton/CopyProfileLinkButton";
-import MuteUserButton from "./MuteUserButton/MuteUserButton";
-import BlockUserButton from "./BlockUserButton/BlockUserButton";
-import UserItemAction from "./UserItemAction/UserItemAction";
-import ViewUserListsButton from "./ViewUserListsButton/ViewUserListsButton";
-import ViewUserTopicsButton from "./ViewUserTopicsButton/ViewUserTopicsButton";
+import AddUserToListsButton from "./AddUserToListsButton";
+import CopyProfileLinkButton from "./CopyProfileLinkButton";
+import MuteUserButton from "./MuteUserButton";
+import BlockUserButton from "./BlockUserButton";
+import UserItemAction from "./UserItemAction";
+import ViewUserListsButton from "./ViewUserListsButton";
+import ViewUserTopicsButton from "./ViewUserTopicsButton";
 import { useClickAway } from "../../../hook/useClickAway";
 
 const UserPageActions = memo((): ReactElement => {
@@ -28,13 +29,18 @@ const UserPageActions = memo((): ReactElement => {
     const isUserBlocked = useSelector(selectUserProfileIsUserBlocked);
     const isPrivateProfile = useSelector(selectUserProfileIsPrivateProfile);
     const isFollower = useSelector(selectUserProfileIsFollower);
+    const { t } = useTranslation();
     const { open, onClickOpen, onClickClose } = useClickAway();
 
     return (
         <ClickAwayListener onClickAway={onClickClose}>
             <div className={classes.container}>
                 <span className={globalClasses.userPageIconButton}>
-                    <ActionIconButton actionText={"More"} onClick={onClickOpen} icon={EditIcon} />
+                    <ActionIconButton
+                        actionText={t("MORE", { defaultValue: "More" })}
+                        onClick={onClickOpen}
+                        icon={EditIcon}
+                    />
                 </span>
                 {open && (
                     <div className={classes.dropdown}>
@@ -44,20 +50,27 @@ const UserPageActions = memo((): ReactElement => {
                                     <ViewUserTopicsButton />
                                     <AddUserToListsButton />
                                     <ViewUserListsButton />
-                                    <UserItemAction title={"View Moments"} icon={MomentsIcon} />
+                                    <UserItemAction
+                                        title={t("VIEW_MOMENTS", { defaultValue: "View Moments" })}
+                                        icon={MomentsIcon}
+                                    />
                                     {!isUserBlocked && (
                                         <>
-                                            <UserItemAction title={"Share profile via..."} icon={ShareIcon} />
+                                            <UserItemAction
+                                                title={t("SHARE_PROFILE_VIA", { defaultValue: "Share profile via..." })}
+                                                icon={ShareIcon}
+                                            />
                                             <CopyProfileLinkButton onCloseUserPageActions={onClickClose} />
                                         </>
                                     )}
                                 </>
                             )}
-                            {!isUserBlocked && (
-                                <MuteUserButton onCloseUserPageActions={onClickClose} />
-                            )}
+                            {!isUserBlocked && <MuteUserButton onCloseUserPageActions={onClickClose} />}
                             <BlockUserButton />
-                            <UserItemAction title={`Report @${username}`} icon={ReportIcon} />
+                            <UserItemAction
+                                title={t("REPORT_USER", { username, defaultValue: `Report @${username}` })}
+                                icon={ReportIcon}
+                            />
                         </List>
                     </div>
                 )}

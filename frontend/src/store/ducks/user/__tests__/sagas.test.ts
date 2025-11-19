@@ -43,7 +43,7 @@ import {
     setGender,
     setLanguage,
     setPhone,
-    setPinTweetId,
+    setPinTweet,
     setPrivateProfile,
     setProfileStarted,
     setReadMessage,
@@ -66,10 +66,9 @@ import {
 
 import { testCall, testLoadingStatus, testSetResponse, testWatchSaga } from "../../../../util/test-utils/test-helper";
 import { UserApi } from "../../../../services/api/user-service/userApi";
-import { AuthUserResponse, UserProfileResponse } from "../../../../types/user";
+import { AuthUserResponse, UserPintTweetResponse, UserProfileResponse } from "../../../../types/user";
 import { SettingsRequest, UserRequest } from "../contracts/state";
-import { AuthenticationResponse, LoginRequest } from "../../../../types/auth";
-import { EndRegistrationRequest } from "../../../../pages/Authentication/SetPasswordModal/SetPasswordModal";
+import { AuthenticationResponse, EndRegistrationRequest, LoginRequest } from "../../../../types/auth";
 import { NotificationUserResponse } from "../../../../types/notification";
 import { setBlockedToTweetsState, setFollowToTweetsState, setMutedToTweetsState } from "../../tweets/actionCreators";
 import {
@@ -81,7 +80,8 @@ import {
     setBlocked,
     setFollowRequestToUserProfile,
     setFollowToUserProfile,
-    setMuted
+    setMuted,
+    setUserPinnedTweet
 } from "../../userProfile/actionCreators";
 import {
     setBlockUserDetail,
@@ -213,11 +213,13 @@ describe("userSaga:", () => {
     });
 
     describe("fetchPinTweetRequest:", () => {
+        const mockResponse = { data: { userId: 1, pinnedTweetId: 1 } } as AxiosResponse<UserPintTweetResponse>;
         const worker = fetchPinTweetRequest(fetchPinTweet(1));
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserApi.processPinTweet, 1, 1);
-        testSetResponse(worker, { data: 1 }, setPinTweetId, 1, "number");
+        testSetResponse(worker, mockResponse, setPinTweet, mockResponse.data, "UserPintTweetResponse");
+        testSetResponse(worker, mockResponse, setUserPinnedTweet, mockResponse.data, "UserPintTweetResponse");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 

@@ -1,6 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { Dialog, DialogContent } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import DialogTitleComponent from "../../../../../components/DialogTitleComponent/DialogTitleComponent";
 import { useTweetListModalStyles } from "./TweetListModalStyles";
@@ -14,6 +15,7 @@ interface TweetListModalProps {
 
 const TweetListModal: FC<TweetListModalProps> = ({ visibleModalWindow, onCloseModalWindow }): ReactElement | null => {
     const classes = useTweetListModalStyles();
+    const { t } = useTranslation();
     const list = useSelector(selectListItem);
 
     if (!visibleModalWindow) {
@@ -27,8 +29,8 @@ const TweetListModal: FC<TweetListModalProps> = ({ visibleModalWindow, onCloseMo
                 <AddTweetForm
                     tweetList={list}
                     minRows={1}
-                    title={"What's happening?"}
-                    buttonName={"Tweet"}
+                    title={t("WHATS_HAPPENING", { defaultValue: "What's happening?" })}
+                    buttonName="Tweet"
                     onCloseModal={onCloseModalWindow}
                 />
             </DialogContent>

@@ -2,66 +2,66 @@ import React, { FC, ReactElement, useEffect } from "react";
 import { Route, useLocation } from "react-router-dom";
 import { Grid, List, Paper, Typography } from "@material-ui/core";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { useSettingsStyles } from "./SettingsStyles";
 import { useGlobalStyles } from "../../util/globalClasses";
-import Account from "./Account/Account";
-import AccountInformation from "./Account/AccountInformation/AccountInformation";
-import ChangeUsername from "./Account/AccountInformation/ChangeUsername/ChangeUsername";
-import ChangePhone from "./Account/AccountInformation/ChangePhone/ChangePhone";
-import ChangeEmail from "./Account/AccountInformation/ChangeEmail/ChangeEmail";
-import ChangeCountry from "./Account/AccountInformation/ChangeCountry/ChangeCountry";
-import ChangeLanguage from "./Account/AccountInformation/ChangeLanguage/ChangeLanguage";
-import ChangeGender from "./Account/AccountInformation/ChangeGender/ChangeGender";
-import ChangeAge from "./Account/AccountInformation/ChangeAge/ChangeAge";
-import ChangeYourPassword from "./Account/ChangeYourPassword/ChangeYourPassword";
-import TweetDeckTeams from "./Account/TweetDeckTeams/TweetDeckTeams";
-import SecurityAndAccountAccess from "./SecurityAndAccountAccess/SecurityAndAccountAccess";
-import DeactivateAccount from "./Account/DeactivateAccount/DeactivateAccount";
-import Security from "./SecurityAndAccountAccess/Security/Security";
-import TwoFactorAuthentication
-    from "./SecurityAndAccountAccess/Security/TwoFactorAuthentication/TwoFactorAuthentication";
-import AppsAndSessions from "./SecurityAndAccountAccess/AppsAndSessions/AppsAndSessions";
-import ConnectedApps from "./SecurityAndAccountAccess/AppsAndSessions/ConnectedApps/ConnectedApps";
-import Sessions from "./SecurityAndAccountAccess/AppsAndSessions/Sessions/Sessions";
-import AccountAccessHistory from "./SecurityAndAccountAccess/AppsAndSessions/AccountAccessHistory/AccountAccessHistory";
-import LoggedDevices from "./SecurityAndAccountAccess/AppsAndSessions/LoggedDevices/LoggedDevices";
-import CurrentSession from "./SecurityAndAccountAccess/AppsAndSessions/Sessions/CurrentSession/CurrentSession";
-import PrivacyAndSafety from "./PrivacyAndSafety/PrivacyAndSafety";
-import Notifications from "./Notifications/Notifications";
-import AccessibilityDisplayLanguages from "./AccessibilityDisplayLanguages/AccessibilityDisplayLanguages";
-import AdditionalResources from "./AdditionalResources/AdditionalResources";
-import AudienceAndTagging from "./PrivacyAndSafety/AudienceAndTagging/AudienceAndTagging";
-import PhotoTagging from "./PrivacyAndSafety/AudienceAndTagging/PhotoTagging/PhotoTagging";
-import YourTweets from "./PrivacyAndSafety/YourTweets/YourTweets";
-import LocationInformation from "./PrivacyAndSafety/YourTweets/LocationInformation/LocationInformation";
-import ContentYouSee from "./PrivacyAndSafety/ContentYouSee/ContentYouSee";
-import MuteAndBlock from "./PrivacyAndSafety/MuteAndBlock/MuteAndBlock";
-import BlockedAccounts from "./PrivacyAndSafety/MuteAndBlock/BlockedAccounts/BlockedAccounts";
-import MutedAccounts from "./PrivacyAndSafety/MuteAndBlock/MutedAccounts/MutedAccounts";
-import MutedWords from "./PrivacyAndSafety/MuteAndBlock/MutedWords/MutedWords";
-import MutedNotifications from "./PrivacyAndSafety/MuteAndBlock/MutedNotifications/MutedNotifications";
-import DirectMessages from "./PrivacyAndSafety/DirectMessages/DirectMessages";
-import Spaces from "./PrivacyAndSafety/Spaces/Spaces";
-import Discoverability from "./PrivacyAndSafety/Discoverability/Discoverability";
-import ManageContacts from "./PrivacyAndSafety/Discoverability/ManageContacts/ManageContacts";
-import AdsPreferences from "./PrivacyAndSafety/AdsPreferences/AdsPreferences";
-import YourAdvertiserList from "./PrivacyAndSafety/AdsPreferences/YourAdvertiserList/YourAdvertiserList";
-import OffTwitterActivity from "./PrivacyAndSafety/OffTwitterActivity/OffTwitterActivity";
-import DataSharing from "./PrivacyAndSafety/DataSharing/DataSharing";
-import Location from "./PrivacyAndSafety/Location/Location";
-import Places from "./PrivacyAndSafety/Location/Places/Places";
-import Filters from "./Notifications/Filters/Filters";
-import Preferences from "./Notifications/Preferences/Preferences";
-import PushNotifications from "./Notifications/Preferences/PushNotifications/PushNotifications";
-import EmailNotifications from "./Notifications/Preferences/EmailNotifications/EmailNotifications";
-import Accessibility from "./AccessibilityDisplayLanguages/Accessibility/Accessibility";
-import DataUsage from "./AccessibilityDisplayLanguages/DataUsage/DataUsage";
-import Display, { DisplayProps } from "./AccessibilityDisplayLanguages/Display/Display";
-import Languages from "./AccessibilityDisplayLanguages/Languages/Languages";
-import Autoplay from "./AccessibilityDisplayLanguages/DataUsage/Autoplay/Autoplay";
-import ContentPreferences from "./Notifications/ContentPreferences/ContentPreferences";
-import PersonalizationAndData from "./Notifications/PersonalizationAndData/PersonalizationAndData";
+import Account from "./Account";
+import AccountInformation from "./Account/AccountInformation";
+import ChangeUsername from "./Account/AccountInformation/ChangeUsername";
+import ChangePhone from "./Account/AccountInformation/ChangePhone";
+import ChangeEmail from "./Account/AccountInformation/ChangeEmail";
+import ChangeCountry from "./Account/AccountInformation/ChangeCountry";
+import ChangeLanguage from "./Account/AccountInformation/ChangeLanguage";
+import ChangeGender from "./Account/AccountInformation/ChangeGender";
+import ChangeAge from "./Account/AccountInformation/ChangeAge";
+import ChangeYourPassword from "./Account/ChangeYourPassword";
+import TweetDeckTeams from "./Account/TweetDeckTeams";
+import SecurityAndAccountAccess from "./SecurityAndAccountAccess";
+import DeactivateAccount from "./Account/DeactivateAccount";
+import Security from "./SecurityAndAccountAccess/Security";
+import TwoFactorAuthentication from "./SecurityAndAccountAccess/Security/TwoFactorAuthentication";
+import AppsAndSessions from "./SecurityAndAccountAccess/AppsAndSessions";
+import ConnectedApps from "./SecurityAndAccountAccess/AppsAndSessions/ConnectedApps";
+import Sessions from "./SecurityAndAccountAccess/AppsAndSessions/Sessions";
+import AccountAccessHistory from "./SecurityAndAccountAccess/AppsAndSessions/AccountAccessHistory";
+import LoggedDevices from "./SecurityAndAccountAccess/AppsAndSessions/LoggedDevices";
+import CurrentSession from "./SecurityAndAccountAccess/AppsAndSessions/Sessions/CurrentSession";
+import PrivacyAndSafety from "./PrivacyAndSafety";
+import Notifications from "./Notifications";
+import AccessibilityDisplayLanguages from "./AccessibilityDisplayLanguages";
+import AdditionalResources from "./AdditionalResources";
+import AudienceAndTagging from "./PrivacyAndSafety/AudienceAndTagging";
+import PhotoTagging from "./PrivacyAndSafety/AudienceAndTagging/PhotoTagging";
+import YourTweets from "./PrivacyAndSafety/YourTweets";
+import LocationInformation from "./PrivacyAndSafety/YourTweets/LocationInformation";
+import ContentYouSee from "./PrivacyAndSafety/ContentYouSee";
+import MuteAndBlock from "./PrivacyAndSafety/MuteAndBlock";
+import BlockedAccounts from "./PrivacyAndSafety/MuteAndBlock/BlockedAccounts";
+import MutedAccounts from "./PrivacyAndSafety/MuteAndBlock";
+import MutedWords from "./PrivacyAndSafety/MuteAndBlock/MutedWords";
+import MutedNotifications from "./PrivacyAndSafety/MuteAndBlock/MutedNotifications";
+import DirectMessages from "./PrivacyAndSafety/DirectMessages";
+import Spaces from "./PrivacyAndSafety/Spaces";
+import Discoverability from "./PrivacyAndSafety/Discoverability";
+import ManageContacts from "./PrivacyAndSafety/Discoverability/ManageContacts";
+import AdsPreferences from "./PrivacyAndSafety/AdsPreferences";
+import YourAdvertiserList from "./PrivacyAndSafety/AdsPreferences/YourAdvertiserList";
+import OffTwitterActivity from "./PrivacyAndSafety/OffTwitterActivity";
+import DataSharing from "./PrivacyAndSafety/DataSharing";
+import Location from "./PrivacyAndSafety/Location";
+import Places from "./PrivacyAndSafety/Location/Places";
+import Filters from "./Notifications/Filters";
+import Preferences from "./Notifications/Preferences";
+import PushNotifications from "./Notifications/Preferences/PushNotifications";
+import EmailNotifications from "./Notifications/Preferences/EmailNotifications";
+import Accessibility from "./AccessibilityDisplayLanguages/Accessibility";
+import DataUsage from "./AccessibilityDisplayLanguages/DataUsage";
+import Display, { DisplayProps } from "./AccessibilityDisplayLanguages/Display";
+import Languages from "./AccessibilityDisplayLanguages/Languages";
+import Autoplay from "./AccessibilityDisplayLanguages/DataUsage/Autoplay";
+import ContentPreferences from "./Notifications/ContentPreferences";
+import PersonalizationAndData from "./Notifications/PersonalizationAndData";
 import {
     SETTINGS,
     SETTINGS_ABOUT,
@@ -120,9 +120,9 @@ import {
     SETTINGS_SECURITY_SESSIONS_CURRENT,
     SETTINGS_TEAMS
 } from "../../constants/path-constants";
-import SettingsHeader from "./SettingsHeader/SettingsHeader";
+import SettingsHeader from "./SettingsHeader";
 import { withDocumentTitle } from "../../hoc/withDocumentTitle";
-import SettingsItem from "./SettingsItem/SettingsItem";
+import SettingsItem from "./SettingsItem";
 
 export interface LocationState {
     pathname: string;
@@ -132,6 +132,7 @@ const Settings: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }
     const globalClasses = useGlobalStyles({});
     const location = useLocation<LocationState>();
     const classes = useSettingsStyles({ location });
+    const { t } = useTranslation();
     const [selectedIndex, setSelectedIndex] = React.useState(1);
 
     useEffect(() => {
@@ -162,7 +163,7 @@ const Settings: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }
                 <Paper className={classes.container} variant="outlined">
                     <Paper className={classnames(globalClasses.pageHeader, classes.leftSideHeader)} variant="outlined">
                         <Typography variant="h5" className={globalClasses.pageHeaderTitleWrapper}>
-                            Settings
+                            {t("SETTINGS", { defaultValue: "Settings" })}
                         </Typography>
                     </Paper>
                     <div className={classnames(classes.listWrapper, globalClasses.contentWrapper, globalClasses.svg)}>
@@ -172,42 +173,46 @@ const Settings: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }
                                 linkTo={SETTINGS}
                                 selectedIndex={selectedIndex}
                                 handleListItemClick={handleListItemClick}
-                                title={"Your account"}
+                                title={t("YOUR_ACCOUNT", { defaultValue: "Your account" })}
                             />
                             <SettingsItem
                                 index={2}
                                 linkTo={SETTINGS_SECURITY_AND_ACCOUNT_ACCESS}
                                 selectedIndex={selectedIndex}
                                 handleListItemClick={handleListItemClick}
-                                title={"Security and account access"}
+                                title={t("SECURITY_AND_ACCOUNT_ACCESS", {
+                                    defaultValue: "Security and account access"
+                                })}
                             />
                             <SettingsItem
                                 index={3}
                                 linkTo={SETTINGS_PRIVACY_AND_SAFETY}
                                 selectedIndex={selectedIndex}
                                 handleListItemClick={handleListItemClick}
-                                title={"Privacy and safety"}
+                                title={t("PRIVACY_AND_SAFETY", { defaultValue: "Privacy and safety" })}
                             />
                             <SettingsItem
                                 index={4}
                                 linkTo={SETTINGS_NOTIFICATION}
                                 selectedIndex={selectedIndex}
                                 handleListItemClick={handleListItemClick}
-                                title={"Notifications"}
+                                title={t("NOTIFICATIONS", { defaultValue: "Notifications" })}
                             />
                             <SettingsItem
                                 index={5}
                                 linkTo={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES}
                                 selectedIndex={selectedIndex}
                                 handleListItemClick={handleListItemClick}
-                                title={"Accessibility, display, and languages"}
+                                title={t("ACCESSIBILITY_DISPLAY_AND_LANGUAGES", {
+                                    defaultValue: "Accessibility, display, and languages"
+                                })}
                             />
                             <SettingsItem
                                 index={6}
                                 linkTo={SETTINGS_ABOUT}
                                 selectedIndex={selectedIndex}
                                 handleListItemClick={handleListItemClick}
-                                title={"Additional resources"}
+                                title={t("ADDITIONAL_RESOURCES", { defaultValue: "Additional resources" })}
                             />
                         </List>
                     </div>
@@ -215,73 +220,243 @@ const Settings: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }
             </Grid>
             <Grid className={classes.grid} md={5} item>
                 <Paper className={classnames(globalClasses.pageHeader, classes.rightSideHeader)} variant="outlined">
-                    <SettingsHeader path={SETTINGS} title={"Your Account"} excludeBackButton />
-                    <SettingsHeader path={SETTINGS_INFO} title={"Account information"} />
-                    <SettingsHeader path={SETTINGS_INFO_USERNAME} title={"Change username"} />
-                    <SettingsHeader path={SETTINGS_INFO_PHONE} title={"Change phone"} />
-                    <SettingsHeader path={SETTINGS_INFO_EMAIL} title={"Change email"} />
-                    <SettingsHeader path={SETTINGS_INFO_COUNTRY} title={"Change country"} />
-                    <SettingsHeader path={SETTINGS_INFO_LANGUAGES} title={"Change display language"} />
-                    <SettingsHeader path={SETTINGS_INFO_GENDER} title={"Gender"} />
-                    <SettingsHeader path={SETTINGS_INFO_AGE} title={"Age"} />
-                    <SettingsHeader path={SETTINGS_PASSWORD} title={"Change your password"} />
-                    <SettingsHeader path={SETTINGS_TEAMS} title={"TweetDeck Teams"} />
-                    <SettingsHeader path={SETTINGS_DEACTIVATE} title={"Deactivate account"} />
-                    <SettingsHeader path={SETTINGS_SECURITY_AND_ACCOUNT_ACCESS} title={"Security and account access"}
-                                    excludeBackButton />
-                    <SettingsHeader path={SETTINGS_SECURITY} title={"Security"} />
-                    <SettingsHeader path={SETTINGS_SECURITY_LOGIN_VERIFICATION} title={"Two-factor authentication"} />
-                    <SettingsHeader path={SETTINGS_SECURITY_APPS_AND_SESSIONS} title={"Apps and sessions"} />
-                    <SettingsHeader path={SETTINGS_SECURITY_CONNECTED_APPS} title={"Connected apps"} />
-                    <SettingsHeader path={SETTINGS_SECURITY_SESSIONS} title={"Sessions"} />
-                    <SettingsHeader path={SETTINGS_SECURITY_SESSIONS_CURRENT} title={"Current session"} />
-                    <SettingsHeader path={SETTINGS_SECURITY_LOGIN_HISTORY} title={"Account access history"} />
-                    <SettingsHeader path={SETTINGS_SECURITY_DEVICES} title={"Logged-in devices and apps"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY} title={"Privacy and safety"} excludeBackButton />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE} title={"Audience and tagging"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_TAGGING} title={"Photo tagging"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_YOUR_TWEETS} title={"Your Tweets"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_LOCATION}
-                                    title={"Add location information to your Tweets"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_CONTENT_YOU_SEE} title={"Content you see"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_MUTE_AND_BLOCK} title={"Mute and block"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_BLOCKED} title={"Blocked accounts"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_MUTED} title={"Muted accounts"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_MUTED_KEYWORDS} title={"Muted words"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_ADVANCED_FILTERS} title={"Muted notifications"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_DIRECT_MESSAGES} title={"Direct Messages"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_SPACES} title={"Spaces"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS}
-                                    title={"Discoverability and contacts"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS_DASHBOARD} title={"Manage contacts"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_ADS_PREFERENCES} title={"Ads preferences"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCES} title={"Your advertiser list"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY}
-                                    title={"Off-Twitter activity"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_DATA_SHARING_WITH_BUSINESS_PARTNERS}
-                                    title={"Data sharing with business partners"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_LOCATION_INFORMATION}
-                                    title={"Location information"} />
-                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_LOCATIONS} title={"See places you’ve been"} />
-                    <SettingsHeader path={SETTINGS_NOTIFICATION} title={"Notifications"} excludeBackButton />
-                    <SettingsHeader path={SETTINGS_NOTIFICATION_FILTERS} title={"Filters"} />
-                    <SettingsHeader path={SETTINGS_NOTIFICATION_PREFERENCES} title={"Preferences"} />
-                    <SettingsHeader path={SETTINGS_NOTIFICATION_PUSH_NOTIFICATIONS} title={"Push notifications"} />
-                    <SettingsHeader path={SETTINGS_NOTIFICATION_EMAIL_NOTIFICATIONS} title={"Email notifications"} />
-                    <SettingsHeader path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES}
-                                    title={"Accessibility, display and languages"} excludeBackButton />
-                    <SettingsHeader path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_ACCESSIBILITY}
-                                    title={"Accessibility"} />
-                    <SettingsHeader path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DISPLAY} title={"Display"} />
-                    <SettingsHeader path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES}
-                                    title={"Languages"} />
-                    <SettingsHeader path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DATA} title={"Data usage"} />
-                    <SettingsHeader path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY}
-                                    title={"Autoplay"} />
-                    <SettingsHeader path={SETTINGS_PERSONALIZATION} title={"Personalization and data"} />
-                    <SettingsHeader path={SETTINGS_ABOUT} title={"Additional resources"} excludeBackButton />
-                    <SettingsHeader path={SETTINGS_CONTENT_PREFERENCES} title={"Content preferences"}
-                                    excludeBackButton />
+                    <SettingsHeader
+                        path={SETTINGS}
+                        title={t("YOUR_ACCOUNT", { defaultValue: "Your Account" })}
+                        excludeBackButton
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_INFO}
+                        title={t("ACCOUNT_INFORMATION", { defaultValue: "Account information" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_INFO_USERNAME}
+                        title={t("CHANGE_USERNAME", { defaultValue: "Change username" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_INFO_PHONE}
+                        title={t("CHANGE_PHONE", { defaultValue: "Change phone" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_INFO_EMAIL}
+                        title={t("CHANGE_EMAIL", { defaultValue: "Change email" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_INFO_COUNTRY}
+                        title={t("CHANGE_COUNTRY", { defaultValue: "Change country" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_INFO_LANGUAGES}
+                        title={t("CHANGE_DISPLAY_LANGUAGE", { defaultValue: "Change display language" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_INFO_GENDER}
+                        title={t("GENDER", { defaultValue: "Gender" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_INFO_AGE}
+                        title={t("AGE", { defaultValue: "Age" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PASSWORD}
+                        title={t("CHANGE_YOUR_PASSWORD", { defaultValue: "Change your password" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_TEAMS}
+                        title={t("TWEETDECK_TEAMS", { defaultValue: "TweetDeck Teams" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_DEACTIVATE}
+                        title={t("DEACTIVATE_ACCOUNT", { defaultValue: "Deactivate account" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_SECURITY_AND_ACCOUNT_ACCESS}
+                        title={t("SECURITY_AND_ACCOUNT_ACCESS", { defaultValue: "Security and account access" })}
+                        excludeBackButton
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_SECURITY}
+                        title={t("SECURITY", { defaultValue: "Security" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_SECURITY_LOGIN_VERIFICATION}
+                        title={t("TWO_FACTOR_AUTHENTICATION", { defaultValue: "Two-factor authentication" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_SECURITY_APPS_AND_SESSIONS}
+                        title={t("APPS_AND_SESSIONS", { defaultValue: "Apps and sessions" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_SECURITY_CONNECTED_APPS}
+                        title={t("CONNECTED_APPS", { defaultValue: "Connected apps" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_SECURITY_SESSIONS}
+                        title={t("SESSIONS", { defaultValue: "Sessions" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_SECURITY_SESSIONS_CURRENT}
+                        title={t("CURRENT_SESSION", { defaultValue: "Current session" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_SECURITY_LOGIN_HISTORY}
+                        title={t("ACCOUNT_ACCESS_HISTORY", { defaultValue: "Account access history" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_SECURITY_DEVICES}
+                        title={t("LOGGED_IN_DEVICES_AND_APPS", { defaultValue: "Logged-in devices and apps" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY}
+                        title={t("PRIVACY_AND_SAFETY", { defaultValue: "Privacy and safety" })}
+                        excludeBackButton
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE}
+                        title={t("AUDIENCE_AND_TAGGING", { defaultValue: "Audience and tagging" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_TAGGING}
+                        title={t("PHOTO_TAGGING", { defaultValue: "Photo tagging" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_YOUR_TWEETS}
+                        title={t("YOUR_TWEETS", { defaultValue: "Your Tweets" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_LOCATION}
+                        title={t("ADD_LOCATION_INFORMATION_TO_YOUR_TWEETS", {
+                            defaultValue: "Add location information to your Tweets"
+                        })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_CONTENT_YOU_SEE}
+                        title={t("CONTENT_YOU_SEE", { defaultValue: "Content you see" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_MUTE_AND_BLOCK}
+                        title={t("MUTE_AND_BLOCK", { defaultValue: "Mute and block" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_BLOCKED}
+                        title={t("BLOCKED_ACCOUNTS", { defaultValue: "Blocked accounts" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_MUTED}
+                        title={t("MUTED_ACCOUNTS", { defaultValue: "Muted accounts" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_MUTED_KEYWORDS}
+                        title={t("MUTED_WORDS", { defaultValue: "Muted words" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_ADVANCED_FILTERS}
+                        title={t("MUTED_NOTIFICATIONS", { defaultValue: "Muted notifications" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_DIRECT_MESSAGES}
+                        title={t("DIRECT_MESSAGES", { defaultValue: "Direct Messages" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_SPACES}
+                        title={t("SPACES", { defaultValue: "Spaces" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS}
+                        title={t("DISCOVERABILITY_AND_CONTACTS", { defaultValue: "Discoverability and contacts" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS_DASHBOARD}
+                        title={t("MANAGE_CONTACTS", { defaultValue: "Manage contacts" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_ADS_PREFERENCES}
+                        title={t("ADS_PREFERENCES", { defaultValue: "Ads preferences" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCES}
+                        title={t("YOUR_ADVERTISER_LIST", { defaultValue: "Your advertiser list" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY}
+                        title={t("OFF_TWITTER_ACTIVITY", { defaultValue: "Off-Twitter activity" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_DATA_SHARING_WITH_BUSINESS_PARTNERS}
+                        title={t("DATA_SHARING_WITH_BUSINESS_PARTNERS", {
+                            defaultValue: "Data sharing with business partners"
+                        })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_LOCATION_INFORMATION}
+                        title={t("LOCATION_INFORMATION", { defaultValue: "Location information" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PRIVACY_AND_SAFETY_LOCATIONS}
+                        title={t("SEE_PLACES_YOU_HAVE_BEEN", { defaultValue: "See places you’ve been" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_NOTIFICATION}
+                        title={t("NOTIFICATIONS", { defaultValue: "Notifications" })}
+                        excludeBackButton
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_NOTIFICATION_FILTERS}
+                        title={t("FILTERS", { defaultValue: "Filters" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_NOTIFICATION_PREFERENCES}
+                        title={t("PREFERENCES", { defaultValue: "Preferences" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_NOTIFICATION_PUSH_NOTIFICATIONS}
+                        title={t("PUSH_NOTIFICATIONS", { defaultValue: "Push notifications" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_NOTIFICATION_EMAIL_NOTIFICATIONS}
+                        title={t("EMAIL_NOTIFICATIONS", { defaultValue: "Email notifications" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES}
+                        title={t("ACCESSIBILITY_DISPLAY_AND_LANGUAGES", {
+                            defaultValue: "Accessibility, display, and languages"
+                        })}
+                        excludeBackButton
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_ACCESSIBILITY}
+                        title={t("ACCESSIBILITY", { defaultValue: "Accessibility" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DISPLAY}
+                        title={t("DISPLAY", { defaultValue: "Display" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES}
+                        title={t("LANGUAGES", { defaultValue: "Languages" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DATA}
+                        title={t("DATA_USAGE", { defaultValue: "Data usage" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY}
+                        title={t("AUTOPLAY", { defaultValue: "Autoplay" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_PERSONALIZATION}
+                        title={t("PERSONALIZATION_AND_DATA", { defaultValue: "Personalization and data" })}
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_ABOUT}
+                        title={t("ADDITIONAL_RESOURCES", { defaultValue: "Additional resources" })}
+                        excludeBackButton
+                    />
+                    <SettingsHeader
+                        path={SETTINGS_CONTENT_PREFERENCES}
+                        title={t("CONTENT_PREFERENCES", { defaultValue: "Content preferences" })}
+                        excludeBackButton
+                    />
                 </Paper>
                 <Paper className={classnames(globalClasses.pageContainer, classes.pageContainer)} variant="outlined">
                     <div className={globalClasses.contentWrapper}>

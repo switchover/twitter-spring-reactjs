@@ -8,17 +8,24 @@ import { NotificationReplyResponse, NotificationResponse } from "../../../types/
 export const initialUserTweetsState: UserTweetsState = {
     items: [],
     pagesCount: 1,
-    loadingState: LoadingStatus.LOADING
+    loadingState: LoadingStatus.LOADING,
+    pinnedTweetLoadingState: LoadingStatus.LOADING
 };
 
 export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action: UserTweetsActions) => {
 
     switch (action.type) {
         case UserTweetsActionType.SET_TWEETS:
-            const replaceTweets = action.payload.items.map(tweet => tweet.retweet ? tweet.retweet : tweet);
-            draft.items = [...draft.items, ...replaceTweets];
+            draft.items = [...draft.items, ...action.payload.items];
             draft.pagesCount = action.payload.pagesCount;
             draft.loadingState = LoadingStatus.LOADED;
+            break;
+
+        case UserTweetsActionType.SET_PINNED_TWEET:
+            if (action.payload) {
+                draft.items = [action.payload, ...draft.items];
+            }
+            draft.pinnedTweetLoadingState = LoadingStatus.LOADED;
             break;
 
         case UserTweetsActionType.SET_FOLLOW_TO_USERS_TWEETS_STATE:
@@ -84,7 +91,13 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
             break;
 
         case UserTweetsActionType.SET_ADDED_TWEET:
-            draft.items = [action.payload, ...draft.items];
+            const pinnedTweetIndex = draft.items.findIndex((tweet) => tweet.author.pinnedTweetId !== null);
+            if (pinnedTweetIndex !== -1) {
+                const [pinnedTweet] = draft.items.splice(pinnedTweetIndex, 1);
+                draft.items = [pinnedTweet, action.payload, ...draft.items];
+            } else {
+                draft.items = [action.payload, ...draft.items];
+            }
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
@@ -125,6 +138,10 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
 
         case UserTweetsActionType.SET_LOADING_STATUS:
             draft.loadingState = action.payload;
+            break;
+
+        case UserTweetsActionType.SET_PINNED_TWEET_LOADING_STATUS:
+            draft.pinnedTweetLoadingState = action.payload;
             break;
 
         default:

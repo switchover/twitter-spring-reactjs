@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import classnames from "classnames";
 import { Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useConversationInfoStyles } from "../ConversationInfoStyles";
 import { leaveFromConversation } from "../../../../store/ducks/chats/actionCreators";
@@ -21,6 +22,7 @@ const LeaveConversationComponent: FC<LeaveConversationComponentProps> = memo((
         chatId
     }
 ): ReactElement => {
+    const { t } = useTranslation();
     const classes = useConversationInfoStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -35,12 +37,12 @@ const LeaveConversationComponent: FC<LeaveConversationComponentProps> = memo((
     return (
         <>
             <div
-                id={"leaveFromConversation"}
+                id="leaveFromConversation"
                 className={classnames(classes.conversationInfoButton, classes.leaveConversation)}
                 onClick={onOpenModalWindow}
             >
-                <Typography variant={"body1"} component={"span"}>
-                    Leave conversation
+                <Typography variant="body1" component="span">
+                    {t("LEAVE_CONVERSATION", { defaultValue: "Leave conversation" })}
                 </Typography>
             </div>
             <LeaveFromConversationModal

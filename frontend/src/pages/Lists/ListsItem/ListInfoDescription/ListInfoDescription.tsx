@@ -2,7 +2,7 @@ import React, { FC, memo, ReactElement } from "react";
 import { Avatar, Typography } from "@material-ui/core";
 
 import LockIcon from "../../../../components/LockIcon/LockIcon";
-import PopperListWindow from "../../PopperListWindow/PopperListWindow";
+import PopperListWindow from "../../PopperListWindow";
 import { useListsItemStyles } from "../ListsItemStyles";
 import { HoverItemDetail, useHoverItem } from "../../../../hook/useHoverItem";
 import { DEFAULT_PROFILE_IMG } from "../../../../constants/url-constants";
@@ -35,28 +35,28 @@ const ListInfoDescription: FC<ListInfoDescriptionProps> = memo((
 
     return (
         <div
-            id={"listInfoWrapper"}
+            id="listInfoWrapper"
             className={classes.listInfoWrapper}
             onMouseEnter={() => handleHoverPopper({ listId: listId! } as HoverItemDetail)}
             onMouseLeave={handleLeavePopper}
         >
             <div>
-                <Typography variant={"h6"} component={"span"} className={classes.listTitle}>
+                <Typography variant="h6" component="span" className={classes.listTitle}>
                     {listName}
                 </Typography>
                 {listIsPrivate && <LockIcon />}
             </div>
-            <Typography variant={"subtitle2"} component={"div"}>
+            <Typography variant="subtitle2" component="div">
                 {listDescription}
             </Typography>
             <div className={classes.listOwnerWrapper}>
                 <Avatar className={classes.listOwnerAvatar} src={avatar} />
             </div>
             <div className={classes.listOwnerInfoWrapper}>
-                <Typography variant={"subtitle2"} component={"span"} className={classes.listOwnerFullName}>
+                <Typography variant="subtitle2" component="span" className={classes.listOwnerFullName}>
                     {listOwnerFullName}
                 </Typography>
-                <Typography variant={"subtitle2"} component={"span"}>
+                <Typography variant="subtitle2" component="span">
                     @{listOwnerUsername}
                 </Typography>
             </div>

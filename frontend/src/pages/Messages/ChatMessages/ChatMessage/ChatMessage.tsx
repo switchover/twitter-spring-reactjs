@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Avatar, Typography } from "@material-ui/core";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { useChatMessageStyles } from "./ChatMessageStyles";
 import { HOME_TWEET } from "../../../../constants/path-constants";
@@ -25,6 +26,7 @@ interface ChatMessageProps {
 
 const ChatMessage: FC<ChatMessageProps> = memo(({ message, isParticipantMessage }): ReactElement => {
     const classes = useChatMessageStyles({ isParticipantMessage });
+    const { t } = useTranslation();
     const myProfileId = useSelector(selectUserDataId);
     const chatSecondParticipantId = useSelector(selectChatSecondParticipantId);
     const chatFirstParticipantAvatar = useSelector(selectChatFirstParticipantAvatar);
@@ -46,7 +48,7 @@ const ChatMessage: FC<ChatMessageProps> = memo(({ message, isParticipantMessage 
                 <div>
                     {message.tweet && (
                         message.tweet.isDeleted ? (
-                            <div>Tweet deleted</div>
+                            <div>{t("TWEET_DELETED", { defaultValue: "Tweet deleted" })}</div>
                         ) : (
                             <div className={classes.tweetContainer}>
                                 <Link to={`${HOME_TWEET}/${message.tweet.id}`}>
@@ -56,30 +58,30 @@ const ChatMessage: FC<ChatMessageProps> = memo(({ message, isParticipantMessage 
                                                 className={classes.tweetAvatar}
                                                 src={message.tweet?.author.avatar ?? DEFAULT_PROFILE_IMG}
                                             />
-                                            <Typography variant={"h6"} component={"span"}>
+                                            <Typography variant="h6" component="span">
                                                 {message.tweet?.author.fullName}
                                             </Typography>
                                             <Typography
-                                                variant={"subtitle1"}
-                                                component={"span"}
+                                                variant="subtitle1"
+                                                component="span"
                                                 className={classes.tweetUsername}
                                             >
                                                 @{message.tweet?.author.username}
                                             </Typography>
                                             <Typography
-                                                variant={"subtitle1"}
-                                                component={"span"}
+                                                variant="subtitle1"
+                                                component="span"
                                                 className={classes.tweetUsername}
                                             >·</Typography>
                                             <Typography
-                                                variant={"subtitle1"}
-                                                component={"span"}
+                                                variant="subtitle1"
+                                                component="span"
                                                 className={classes.tweetUsername}
                                             >
                                                 {formatDate(new Date(message.tweet?.createdAt!))}
                                             </Typography>
                                         </div>
-                                        <Typography variant={"body1"} component={"span"}>
+                                        <Typography variant="body1" component="span">
                                             {textFormatter(message.tweet?.text)}
                                         </Typography>
                                     </div>
@@ -94,7 +96,7 @@ const ChatMessage: FC<ChatMessageProps> = memo(({ message, isParticipantMessage 
                                 ? classes.myMessageWithTweet
                                 : classes.myMessageCommon
                         )}>
-                            <Typography component={"span"}>
+                            <Typography component="span">
                                 {textFormatter(message.text)}
                             </Typography>
                         </div>
@@ -103,7 +105,7 @@ const ChatMessage: FC<ChatMessageProps> = memo(({ message, isParticipantMessage 
             </div>
             <div className={classes.myMessageDate}>
                 {!isParticipantMessage && <span>{CheckIcon}</span>}
-                <Typography variant={"subtitle2"} component={"span"}>
+                <Typography variant="subtitle2" component="span">
                     {formatChatMessageDate(new Date(message.createdAt))}
                 </Typography>
             </div>
