@@ -41,13 +41,29 @@ public class TagMapperTest {
 
     @Test
     public void getTags() {
+        when(tagService.getTags()).thenReturn(tags);
+        when(basicMapper.convertToResponseList(tags, TagResponse.class)).thenReturn(tagResponses);
+        assertEquals(tagResponses, tagMapper.getTags());
+        verify(tagService, times(1)).getTags();
+        verify(basicMapper, times(1)).convertToResponseList(tags, TagResponse.class);
     }
 
     @Test
     public void getTrends() {
+        Page<Tag> pageableTags = new PageImpl<>(tags, PageRequest.of(0, 20), 20);
+        HeaderResponse<TagResponse> headerResponse = new HeaderResponse<>(tagResponses, new HttpHeaders());
+        when(tagService.getTrends(PageRequest.of(0, 20))).thenReturn(pageableTags);
+        when(basicMapper.getHeaderResponse(pageableTags, TagResponse.class)).thenReturn(headerResponse);
+        assertEquals(headerResponse, tagMapper.getTrends(PageRequest.of(0, 20)));
+        verify(tagService, times(1)).getTrends(PageRequest.of(0, 20));
+        verify(basicMapper, times(1)).getHeaderResponse(pageableTags, TagResponse.class);
     }
 
     @Test
     public void getTweetsByTag() {
+        List<TweetResponse> tweetResponses = List.of(new TweetResponse(), new TweetResponse());
+        when(tagService.getTweetsByTag(TestConstants.TAG_NAME)).thenReturn(tweetResponses);
+        assertEquals(tweetResponses, tagMapper.getTweetsByTag(TestConstants.TAG_NAME));
+        verify(tagService, times(1)).getTweetsByTag(TestConstants.TAG_NAME);
     }
 }
